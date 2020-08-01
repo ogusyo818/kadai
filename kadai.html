@@ -1,0 +1,243 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="OrbitControls.js"></script>
+    <script>
+      // ページの読み込みを待つ
+      window.addEventListener('load', init);
+
+      function init() {
+        // サイズを指定
+        const width = 960;
+        const height = 540;
+
+        // レンダラーを作成
+        const renderer = new THREE.WebGLRenderer({
+          canvas: document.querySelector('#myCanvas')
+        });
+        renderer.setSize(width, height);
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // フォグを設定
+        scene.fog = new THREE.Fog(0xF8F8FF, 50, 2000);
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 1000);
+
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera);
+        controls.autoRotate = true;
+
+        // helper
+        const gridHelper = new THREE.GridHelper(1000,20); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(1000); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
+
+        var plane =  new THREE.Mesh(                                      
+             new THREE.PlaneGeometry(10000, 10000, 1, 1),
+              new THREE.MeshLambertMaterial({ 
+                color: 0xA9A9A9            
+                }));   
+        plane.rotation.x = -1/2*Math.PI;
+        scene.add(plane);
+
+         // テクスチャー読み込み
+ var textureLoader1 = new THREE.TextureLoader();  
+  var texture1 = textureLoader1.load("img/img351_25.png");
+  var mat1 = new THREE.MeshPhongMaterial();
+  mat1.map = texture1;
+
+  var textureLoader2 = new THREE.TextureLoader();  
+  var texture2 = textureLoader2.load("img/img351_05.png");
+  var mat2 = new THREE.MeshPhongMaterial();
+  mat2.map = texture2;
+
+  var textureLoader3 = new THREE.TextureLoader();  
+  var texture3 = textureLoader3.load("img/road.png");
+  var mat3 = new THREE.MeshPhongMaterial();
+  mat3.map = texture3;
+
+  var textureLoader4 = new THREE.TextureLoader();  
+  var texture4 = textureLoader3.load("img/car.png");
+  var mat4 = new THREE.MeshPhongMaterial();
+  mat4.map = texture4;
+
+
+                // グループを作成
+        const group = new THREE.Group();
+        scene.add(group);
+        const geometry = new THREE.BoxGeometry(150, 150, 500);
+        //const geometry = new THREE.BoxBufferGeometry(50, 50, 50);
+        const material = new THREE.MeshStandardMaterial();
+
+        const geometry2 = new THREE.BoxGeometry(15, 15, 15);
+
+        const car = new THREE.Mesh(geometry2, mat4);
+        car.position.x = -150;
+        car.position.y = 2;
+        car.position.z = -200;
+        scene.add(car);
+
+        const car2 = new THREE.Mesh(geometry2, mat4);
+        car2.position.x = -150;
+        car2.position.y = 2;
+        car2.position.z = 500;
+        scene.add(car2);
+
+        //ビル１.1
+        for (let i = 0; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat1);
+          mesh.position.x = i*250;
+          mesh.position.y = 200;
+          mesh.position.z = 0;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+        //ビル1.2        
+        for (let i = 1.8; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat1);
+          mesh.position.x = -i*250;
+          mesh.position.y = 200;
+          mesh.position.z = 0;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+        //ビル1.3
+        for (let i = 0; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat1);
+          mesh.position.x = i*250;
+          mesh.position.y = 200;
+          mesh.position.z = -480;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+
+        for (let i = 0; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat1);
+          mesh.position.x = i*250;
+          mesh.position.y = 200;
+          mesh.position.z = 780;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+
+        //ビル2.1
+        for (let i = 0; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat2);
+          mesh.position.x = i * 250;
+          mesh.position.y = 200;
+          mesh.position.z = 250;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+        //ビル2.2
+        for (let i = 1.8; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat2);
+          mesh.position.x = -i * 250;
+          mesh.position.y = 200;
+          mesh.position.z = 250;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+
+         
+        for (let i = 1.8; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat2);
+          mesh.position.x = -i * 250;
+          mesh.position.y = 200;
+          mesh.position.z = 780;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+
+        for (let i = 1.8; i < 5; i++) {
+          const mesh = new THREE.Mesh(geometry, mat2);
+          mesh.position.x = -i * 250;
+          mesh.position.y = 200;
+          mesh.position.z = -480;
+          mesh.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(mesh);
+        }
+
+        for (let i = -10; i < 200; i++) {
+          var plane2 =  new THREE.Mesh(                                      
+             new THREE.PlaneGeometry(150, 100, 1, 1),mat3     
+                );  
+                plane2.position.x = i*100;
+                plane2.position.y = 2;
+                plane2.position.z = 525;
+                plane2.rotation.x = -1/2*Math.PI;
+                plane2.rotation.z = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(plane2);
+        }
+
+        for (let i = -10; i < 200; i++) {
+          var plane2 =  new THREE.Mesh(                                      
+             new THREE.PlaneGeometry(150, 100, 1, 1),mat3     
+                );  
+                plane2.position.x = i*100;
+                plane2.position.y = 2;
+                plane2.position.z = -230;
+                plane2.rotation.x = -1/2*Math.PI;
+                plane2.rotation.z = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(plane2);
+        }
+
+        for (let i = -10; i < 50; i++) {
+          var plane2 =  new THREE.Mesh(                                      
+             new THREE.PlaneGeometry(150, 100, 1, 1),mat3     
+                );  
+                plane2.position.x = -220;
+                plane2.position.y = 2;
+                plane2.position.z = i*100;
+                plane2.rotation.x = -1/2*Math.PI;
+          // グループに格納する
+          scene.add(plane2);
+        }
+     
+      　 // 光源（環境光）
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+        scene.add(ambientLight);
+
+        // 平行光源
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff,0.5);
+        directionalLight1.position.set(1000, 1000, 700);
+        // シーンに追加
+        scene.add(directionalLight1);
+        
+
+        tick();
+        var degree = -10;
+        // 毎フレーム時に実行されるループイベントです
+        function tick() {
+                    // レンダリング
+         degree = degree + 1;
+         car.position.x = degree;
+         car2.position.x = degree;
+          requestAnimationFrame(tick);
+          renderer.render(scene, camera);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas"></canvas>
+  </body>
+</html>
